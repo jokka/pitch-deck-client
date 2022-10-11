@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json.schemastore.org/eslintrc.json",
+  "extends": ["react-app", "react-app/jest", "prettier"],
+  "rules": {
+    "quotes": ["error", "single", "avoid-escape"],
+    "arrow-body-style": ["error", "as-needed"]
+  }
+}
