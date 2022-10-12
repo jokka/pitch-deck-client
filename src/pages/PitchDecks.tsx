@@ -1,18 +1,32 @@
 import React from 'react';
+import { atom, useSetAtom } from 'jotai';
+import { Link } from 'react-router-dom';
 import Dropzone from '../components/Dropzone';
-import { useSetAtom } from 'jotai';
 import FileUploads from '../components/FileUploads';
 import useDocuments from '../queries/useDocuments';
-import filesAtom from '../state/filesAtom';
+import fileUploadsAtom, {
+  FileUpload,
+  FileUploadState,
+} from '../state/fileUploadsAtom';
 import Spinner from '../components/graphics/Spinner';
 import ExclamationTriangle from '../components/graphics/ExclamationTriangle';
 import { srcSetToString } from '../model/Image';
-import { Link } from 'react-router-dom';
+import uploadFileAtom from '../actions/uploadFileAtom';
 
 const PitchDecks = () => {
-  const setFiles = useSetAtom(filesAtom);
+  const setFileUploads = useSetAtom(fileUploadsAtom);
+  const uploadFile = useSetAtom(uploadFileAtom);
 
-  const handleDrop = (files: File[]) => setFiles(prev => [...prev, ...files]);
+  const handleDrop = (files: File[]) => {
+    const fileUploads = files.map<FileUpload>(file => {
+      const stateAtom = atom<FileUploadState>({ is: 'Pending' });
+      const fileUpload = { file, stateAtom };
+      uploadFile(fileUpload);
+      return fileUpload;
+    });
+
+    setFileUploads(prev => [...prev, ...fileUploads]);
+  };
 
   const documents = useDocuments();
 

@@ -1,14 +1,14 @@
-import { atom, PrimitiveAtom } from 'jotai';
-import { atomFamily } from 'jotai/utils';
+import { PrimitiveAtom, atom } from 'jotai';
 import Document from '../model/Document';
 
-export default atomFamily<File, PrimitiveAtom<FileUploadState>>(() =>
-  atom<FileUploadState>({
-    is: 'Pending',
-  })
-);
+export default atom<FileUpload[]>([]);
 
-type FileUploadState = Pending | InProgress | Completed | Failed;
+export interface FileUpload {
+  file: File;
+  stateAtom: PrimitiveAtom<FileUploadState>;
+}
+
+export type FileUploadState = Pending | InProgress | Completed | Failed;
 
 interface Pending {
   is: 'Pending';
