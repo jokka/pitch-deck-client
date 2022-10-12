@@ -28,3 +28,5 @@ docker run -it --rm \
   node:16 \
   -c "yarn && yarn build && npx --yes serve -s build"
 ```
+
+And finally open [http://localhost:3000.](http://localhost:3000) 🥳
