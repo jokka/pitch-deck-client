@@ -17,6 +17,7 @@ interface Pending {
 interface InProgress {
   is: 'InProgress';
   abortController: AbortController;
+  progress?: number;
 }
 
 interface Completed {

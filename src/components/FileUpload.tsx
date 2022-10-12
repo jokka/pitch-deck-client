@@ -35,6 +35,19 @@ const FileUpload = ({ file }: FileUploadProps) => {
 
             const response = await backend.post('/documents', data, {
               signal: abortController.signal,
+              onUploadProgress: e => {
+                setFileUpload(upload => {
+                  if (upload.is === 'InProgress') {
+                    return {
+                      is: 'InProgress',
+                      abortController,
+                      progress: e.progress,
+                    };
+                  } else {
+                    return fileUpload;
+                  }
+                });
+              },
             });
 
             if (abortController.signal.aborted) {
@@ -70,7 +83,13 @@ const FileUpload = ({ file }: FileUploadProps) => {
       {fileUpload.is === 'InProgress' ? (
         <div className="flex items-center gap-1">
           <Spinner />
-          <p>Uploading…</p>
+          {fileUpload.progress === undefined ? (
+            <p>In progress…</p>
+          ) : fileUpload.progress === 1 ? (
+            <p>Processing…</p>
+          ) : (
+            <p>Uploading… {Math.round(fileUpload.progress * 100)}%</p>
+          )}
         </div>
       ) : fileUpload.is === 'Completed' ? (
         <div className="flex items-center gap-1">
