@@ -1,8 +1,8 @@
 import { atom } from 'jotai';
+import { queryClientAtom } from 'jotai/query';
 import { FileUpload } from '../state/fileUploadsAtom';
 import backendAtom from '../state/backendAtom';
 import Document from '../model/Document';
-import { queryClientAtom } from 'jotai/query';
 
 export default atom(null, async (get, set, { file, stateAtom }: FileUpload) => {
   const backend = get(backendAtom);
