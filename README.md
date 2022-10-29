@@ -7,13 +7,13 @@ Pitch Deck Client is a [Create React App](https://create-react-app.dev) [Node.js
 If you have [Yarn](https://yarnpkg.com) installed, just run the following command.
 
 ```shell
-cd pitch-deck-client && yarn && yarn start
+yarn && yarn start
 ```
 
 If you don’t, you could try with [NPM](https://www.npmjs.com), which is most likely going to work just as well.
 
 ```shell
-cd pitch-deck-client && npm i && npm run start
+npm i && npm run start
 ```
 
 Alternatively, you can use [Docker.](https://www.docker.com)
