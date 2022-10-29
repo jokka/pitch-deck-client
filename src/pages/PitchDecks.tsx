@@ -10,8 +10,9 @@ import fileUploadsAtom, {
 } from '../state/fileUploadsAtom';
 import Spinner from '../components/graphics/Spinner';
 import ExclamationTriangle from '../components/graphics/ExclamationTriangle';
-import { srcSetToString } from '../model/Image';
 import uploadFileAtom from '../actions/uploadFileAtom';
+import clsx from 'clsx';
+import Page from '../components/Page';
 
 const PitchDecks = () => {
   const setFileUploads = useSetAtom(fileUploadsAtom);
@@ -58,15 +59,16 @@ const PitchDecks = () => {
               >
                 <Link
                   to={'/' + document.id}
-                  className="w-full h-full drop-shadow-sm cursor-pointer hover:scale-105 hover:drop-shadow-md active:scale-100 active:drop-shadow-sm transition-all flex flex-col"
+                  className={clsx(
+                    'w-full h-full drop-shadow-sm cursor-pointer hover:scale-105 hover:drop-shadow-md active:scale-100 active:drop-shadow-sm transition-all flex',
+                    {
+                      'flex-col': document.pages[0].aspectRatio < 1,
+                    }
+                  )}
                 >
-                  <img
-                    tabIndex={-1}
-                    src={document.pages[0].image.src}
-                    srcSet={srcSetToString(document.pages[0].image.srcSet)}
-                    alt={document.fileName}
-                    className="max-w-full max-h-full m-auto"
-                    style={{ aspectRatio: document.pages[0].aspectRatio }}
+                  <Page
+                    page={document.pages[0]}
+                    className="max-w-full max-h-full m-auto text-xs"
                   />
                 </Link>
               </div>

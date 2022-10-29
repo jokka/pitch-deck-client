@@ -7,7 +7,7 @@ export default function useCreateSession() {
   const backend = useAtomValue(backendAtom);
 
   return useMutation(async () => {
-    const response = await backend.get('/session');
+    const response = await backend.post('/session');
     return Session.parse(response.data);
   });
 }

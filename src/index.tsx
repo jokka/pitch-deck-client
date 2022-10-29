@@ -7,6 +7,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { queryClientAtom } from 'jotai/query';
 import SessionProvider from './session/SessionProvider';
+import EventListener from './events/EventListener';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +18,9 @@ root.render(
   <QueryClientProvider client={queryClient}>
     <Provider initialValues={[[queryClientAtom, queryClient] as const]}>
       <SessionProvider>
-        <App />
+        <EventListener>
+          <App />
+        </EventListener>
       </SessionProvider>
     </Provider>
   </QueryClientProvider>
