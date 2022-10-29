@@ -1,12 +1,23 @@
 import { z } from 'zod';
-import Image from './Image';
+import Rendering from './Rendering';
 
 const Page = z.object({
   aspectRatio: z.number(),
-  image: Image,
+  src: Rendering(z.string()),
+  srcSet: z.record(z.string()),
+  alt: z.string(),
 });
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 type Page = z.infer<typeof Page>;
 
 export default Page;
+
+export function srcSetToString(
+  assetsUrl: string,
+  srcSet: Page['srcSet']
+): string {
+  return Object.entries(srcSet)
+    .map(([key, value]) => assetsUrl + value + ' ' + key)
+    .join(',');
+}
